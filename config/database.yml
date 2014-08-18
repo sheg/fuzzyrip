@@ -14,5 +14,3 @@ test:
 production:
   <<: *default
   database: FuzzyDraftRipper_production
-  username: FuzzyDraftRipper
-  password: <%= ENV['FUZZYDRAFTRIPPER_DATABASE_PASSWORD'] %>
