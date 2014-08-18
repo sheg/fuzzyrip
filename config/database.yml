@@ -1,0 +1,18 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
+development:
+  <<: *default
+  database: FuzzyDraftRipper_development
+
+test:
+  <<: *default
+  database: FuzzyDraftRipper_test
+
+production:
+  <<: *default
+  database: FuzzyDraftRipper_production
+  username: FuzzyDraftRipper
+  password: <%= ENV['FUZZYDRAFTRIPPER_DATABASE_PASSWORD'] %>

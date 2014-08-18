@@ -1,0 +1,21 @@
+<h3> Players Drafted </h3>
+
+
+<table class="table table-condensed">
+  <head>
+    <tr>
+      <th>Player</th>
+      <th>Average (Pick Format)</th>
+      <th>Average (Round Format)</th>
+    </tr>
+  </head>
+  <body>
+  <% @players.each do |player| %>
+    <tr>
+      <td> <%= link_to(player.name, home_path(player.id)) %> </td>
+      <td> <%= player.average_round_pick %> </td>
+      <td> <%= player.average_total_pick %> </td>
+    </tr>
+  <% end %>
+  </body>
+</table>
