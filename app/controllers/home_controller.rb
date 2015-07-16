@@ -7,4 +7,12 @@ class HomeController < ApplicationController
   def show
     @player = Player.find_by(id: params[:id])
   end
+
+  def destroy
+    @player_id = params[:id]
+
+    respond_to do |format|
+      format.js
+    end
+  end
 end

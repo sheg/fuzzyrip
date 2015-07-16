@@ -1,9 +1,10 @@
-<h3> Players To Draft </h3>
-
+<h1> Players To Draft </h1>
+<h4>Sample Size: <%= @players.first.picks.size %> </h4>
 
 <table class="table table-condensed">
   <head>
     <tr>
+      <th>Hide/Show</th>
       <th>Player</th>
       <th>Average (Round Format)</th>
       <th>Average (Total Pick)</th>
@@ -14,7 +15,8 @@
   </head>
   <body>
   <% @players.each do |player| %>
-    <tr>
+    <tr id=<%="edit-player-#{player.id}" %>>
+      <td><%= link_to('Remove', home_path(player.id), method: :delete, data: { :confirm => "Remove #{player.name}?" }, remote: true, class: "btn btn-sm btn-info") %> </td>
       <td> <%= link_to(player.name, home_path(player.id)) %> </td>
       <td> <%= player.average_round_pick %> </td>
       <td> <%= player.average_total_pick.round(3) %> </td>
