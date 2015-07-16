@@ -1,6 +1,30 @@
 require 'watir-webdriver'
 
+class Array
+  def sum
+    self.inject(0){|accum, i| accum + i }
+  end
+
+  def mean
+    self.sum/self.length.to_f
+  end
+
+  def sample_variance
+    m = self.mean
+    sum = self.inject(0){|accum, i| accum +(i-m)**2 }
+    sum/(self.length - 1).to_f
+  end
+
+  def standard_deviation
+    return Math.sqrt(self.sample_variance)
+  end
+end
+
+
 class Player < ActiveRecord::Base
+  include Enumerable
+
+  validates_uniqueness_of :name
 
   def average_total_pick
     numeric_picks = formatted_numeric_picks

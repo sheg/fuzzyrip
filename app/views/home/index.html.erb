@@ -1,12 +1,15 @@
-<h3> Players Drafted </h3>
+<h3> Players To Draft </h3>
 
 
 <table class="table table-condensed">
   <head>
     <tr>
       <th>Player</th>
-      <th>Average (Pick Format)</th>
       <th>Average (Round Format)</th>
+      <th>Average (Total Pick)</th>
+      <th>Standard Deviation</th>
+      <th>Min</th>
+      <th>Max</th>
     </tr>
   </head>
   <body>
@@ -14,7 +17,10 @@
     <tr>
       <td> <%= link_to(player.name, home_path(player.id)) %> </td>
       <td> <%= player.average_round_pick %> </td>
-      <td> <%= player.average_total_pick %> </td>
+      <td> <%= player.average_total_pick.round(3) %> </td>
+      <td> <%= player.formatted_numeric_picks.standard_deviation.round(3) %> </td>
+      <td></td>
+      <td></td>
     </tr>
   <% end %>
   </body>

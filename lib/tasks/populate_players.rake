@@ -1,11 +1,11 @@
-
 desc "populate players"
 task populate_players: :environment do
+  Player.destroy_all
   populate_picks
 end
 
 def populate_picks
-  players = ["Brady, Tom", "White, Roddy", "Bennett, Martell", "Boykin, Jarrett"]
+  players = File.readlines("players.txt").map { |line| line.gsub("\n", '') }.reject { |x| x == '' }
   sign_into_fuzzy
   players.each do |player|
     puts "populating picks for: #{player}"
@@ -14,7 +14,8 @@ def populate_picks
 end
 
 def populate_player_picks(name)
-  ids = get_league_ids
+  # ids = get_league_ids
+  ids = (3806..3824).to_a
   picks = []
   formatted_picks = []
 
@@ -27,6 +28,14 @@ def populate_player_picks(name)
   end
   stripped_picks = picks.reject { |pick| pick == "n/a" }
   stripped_formatted_picks = formatted_picks.reject { |pick| pick == "n/a" }
+
+  found_player = Player.find_by(name: name)
+
+  if found_player
+    puts "destroying #{name}"
+    Player.destroy(found_player.id)
+  end
+
   Player.create(name: name, picks: stripped_picks, formatted_picks: stripped_formatted_picks)
   puts "n = #{stripped_picks.length}"
 end
@@ -34,7 +43,7 @@ end
 def sign_into_fuzzy
   @driver = Watir::Browser.new :phantomjs
   @driver.goto("http://fuzzyfantasyfootball.com")
-  @driver.text_field(:name => 'Email').set("danforkosh@yahoo.com")
+  @driver.text_field(:name => 'Email').set("forkoshd@gmail.com")
   @driver.text_field(:name => 'Password').set("rice8080")
   @driver.button(:class => 'loginSubmit').click
   sleep 2
@@ -53,6 +62,7 @@ def get_league_ids
 end
 
 def navigate_to_draft_results(id)
+  puts "http://fuzzyfantasyfootball.com/members/draftresults.php?entire=yes&lid=#{id}"
   @driver.goto("http://fuzzyfantasyfootball.com/members/draftresults.php?entire=yes&lid=#{id}")
 end
 
