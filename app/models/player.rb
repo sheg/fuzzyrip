@@ -1,4 +1,54 @@
-require 'watir-webdriver'
+class Player < ActiveRecord::Base
+
+  validates_uniqueness_of :name
+
+  has_many :player_picks
+  has_many :picks, through: :player_picks
+
+  def average_round_pick
+    if !self.picks.empty?
+      total_average = average_total_pick.round
+      round = (total_average - 1) / 12 + 1
+      pick = total_average - (round - 1)*12
+      "#{round}.#{pick}"
+    else
+      "n/a"
+    end
+  end
+
+  def average_total_pick
+    if !self.picks.empty?
+      sum = self.picks.map { |pick| pick.total }.reduce(:+)
+      sum / self.picks.length
+    else
+      0
+    end
+  end
+
+  def min_pick
+    if !self.picks.empty?
+      picks = self.picks.map { |pick| pick.total }
+      pick_total = picks.sort.first
+      round = ((pick_total - 1) / 12) + 1
+      pick = pick_total - (round - 1)*12
+      "#{round}.#{pick}"
+    else
+      "n/a"
+    end
+  end
+
+  def max_pick
+    if !self.picks.empty?
+      picks = self.picks.map { |pick| pick.total }
+      pick_total = picks.sort.last
+      round = ((pick_total - 1) /   12) + 1
+      pick = pick_total - (round - 1)*12
+      "#{round}.#{pick}"
+    else
+      "n/a"
+    end
+  end
+end
 
 class Array
   def sum
@@ -16,30 +66,6 @@ class Array
   end
 
   def standard_deviation
-    return Math.sqrt(self.sample_variance)
-  end
-end
-
-
-class Player < ActiveRecord::Base
-  include Enumerable
-
-  validates_uniqueness_of :name
-
-  def average_total_pick
-    numeric_picks = formatted_numeric_picks
-    numeric_picks.sum.to_f / numeric_picks.length
-  end
-
-  def average_round_pick
-    total_average = average_total_pick.round
-    round = (total_average - 1) / 12 + 1
-    pick = total_average - (round - 1)*12
-    "#{round}.#{pick}"
-  end
-
-  def formatted_numeric_picks
-    picks = self.formatted_picks
-    picks.map { |pick| pick.to_i }
+    Math.sqrt(self.sample_variance)
   end
 end

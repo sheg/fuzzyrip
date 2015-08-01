@@ -1,7 +1,7 @@
 <h1> <%= @player.name %> </h1>
 
 <ul class="list-group">
-  <% @player.picks.sort.each do |pick| %>
-    <li class="list-group-item"><%= pick %></li>
+  <% @picks.each do |pick| %>
+    <li class="list-group-item"><%= convert_total_pick(pick) %></li>
   <% end %>
 </ul>

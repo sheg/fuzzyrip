@@ -1,43 +1,43 @@
+require 'pry'
+
 desc "populate players"
 task populate_players: :environment do
-  Player.destroy_all
+  PlayerPick.destroy_all
   populate_picks
 end
 
 def populate_picks
   players = File.readlines("players.txt").map { |line| line.gsub("\n", '') }.reject { |x| x == '' }
   sign_into_fuzzy
-  players.each do |player|
-    puts "populating picks for: #{player}"
-    populate_player_picks player
-  end
+  populate_player_picks players
 end
 
-def populate_player_picks(name)
+def populate_player_picks(players)
   # ids = get_league_ids
-  ids = (3806..3824).to_a
-  picks = []
-  formatted_picks = []
+  ids = (3806..3900).to_a
 
   ids.each do |id|
     navigate_to_draft_results id
-    pick = get_pick(name)
-    picks.push pick
-    formatted_picks.push(format_pick pick)
-    puts pick
+    puts "League id: #{id}"
+
+    players.each do |name|
+      player = Player.find_or_create_by(name: name)
+
+      pick = get_pick(name)
+
+      unless pick
+        next
+      end
+
+      formatted_pick = format_pick pick
+      pick = Pick.find_or_create_by(round: pick, total: formatted_pick)
+
+      PlayerPick.create(player_id: player.id, pick_id: pick.id)
+      puts "populating player: #{name} - #{pick.round}"
+    end
   end
-  stripped_picks = picks.reject { |pick| pick == "n/a" }
-  stripped_formatted_picks = formatted_picks.reject { |pick| pick == "n/a" }
 
-  found_player = Player.find_by(name: name)
-
-  if found_player
-    puts "destroying #{name}"
-    Player.destroy(found_player.id)
-  end
-
-  Player.create(name: name, picks: stripped_picks, formatted_picks: stripped_formatted_picks)
-  puts "n = #{stripped_picks.length}"
+  puts "n = #{ids.length}"
 end
 
 def sign_into_fuzzy
@@ -54,7 +54,8 @@ def get_league_ids
   league_ids = []
 
   types.each do |type|
-    @driver.goto("http://fuzzyfantasyfootball.com/members/publicleagues.php?action=#{type}&dtype=1")
+    # @driver.goto("http://fuzzyfantasyfootball.com/members/publicleagues.php?action=#{type}&dtype=1")
+    @driver.goto("http://fuzzyfantasyfootball.com/members/mockdrafts.php")
     page_source = @driver.html
     league_ids.push(page_source.scan(/href=.*lid=(\d+)/).uniq)
   end
@@ -72,8 +73,9 @@ def get_pick(name)
   rescue
     matched_row = ''
   end
+
   if matched_row.empty? or matched_row[0].include? "$"
-    pick = "n/a"
+    pick = nil
   else
     pick = matched_row[0].split(" ").last
   end

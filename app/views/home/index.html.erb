@@ -1,29 +1,28 @@
-<h1> Players To Draft </h1>
-<h4>Sample Size: <%= @players.first.picks.size %> </h4>
+<h1> War Room </h1>
 
-<table class="table table-condensed">
+<table class="table table-condensed table-striped">
   <head>
     <tr>
       <th>Hide/Show</th>
       <th>Player</th>
-      <th>Average (Round Format)</th>
-      <th>Average (Total Pick)</th>
-      <th>Standard Deviation</th>
+      <th>Average Pick</th>
+      <th>SD</th>
       <th>Min</th>
       <th>Max</th>
+      <th>Sample</th>
     </tr>
   </head>
   <body>
   <% @players.each do |player| %>
-    <tr id=<%="edit-player-#{player.id}" %>>
-      <td><%= link_to('Remove', home_path(player.id), method: :delete, data: { :confirm => "Remove #{player.name}?" }, remote: true, class: "btn btn-sm btn-info") %> </td>
-      <td> <%= link_to(player.name, home_path(player.id)) %> </td>
-      <td> <%= player.average_round_pick %> </td>
-      <td> <%= player.average_total_pick.round(3) %> </td>
-      <td> <%= player.formatted_numeric_picks.standard_deviation.round(3) %> </td>
-      <td></td>
-      <td></td>
-    </tr>
+      <tr id=<%="edit-player-#{player.id}" %>>
+        <td><%= link_to('Remove', home_path(player.id), method: :delete, data: { :confirm => "Remove #{player.name}?" }, remote: true, class: "btn btn-sm btn-info") %> </td>
+        <td> <%= link_to(player.name, home_path(player.id)) %> </td>
+        <td> <%= player.average_round_pick %> </td>
+        <td> <%= player.picks.map { |pick| pick.total }.standard_deviation.round(3) %> </td>
+        <td> <%= player.min_pick %></td>
+        <td> <%= player.max_pick %></td>
+        <td><%= player.picks.size %></td>
+      </tr>
   <% end %>
   </body>
 </table>

@@ -6,6 +6,7 @@ class HomeController < ApplicationController
 
   def show
     @player = Player.find_by(id: params[:id])
+    @picks = @player.picks.map { |pick| pick.total }.sort
   end
 
   def destroy
