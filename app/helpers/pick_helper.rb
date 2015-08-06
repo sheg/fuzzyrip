@@ -5,4 +5,8 @@ module PickHelper
     pick = pick_total - (round - 1)*12
     "#{round}.#{pick}"
   end
+
+  def filter_position(players, position)
+    players.select { |player| player.position.name == position }
+  end
 end

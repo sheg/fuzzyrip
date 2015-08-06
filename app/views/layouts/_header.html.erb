@@ -1,8 +1,12 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="navbar-inner">
     <div class="container">
+      <%= link_to "Fuzzy Ripper", root_path, id: "logo" %>
       <nav>
-        <%= link_to "Fuzzy Ripper", root_path, id: "logo" %>
+        <ul class="nav navbar-nav navbar-right">
+          <li><%= link_to "War Room", home_index_path, id: "header-link" %></li>
+          <li><%= link_to "Position View", positions_path, id: "header-link" %></li>
+        </ul>
       </nav>
     </div>
   </div>

@@ -1,10 +1,12 @@
 <h1> War Room </h1>
 
+<span class="position-heading">Total Players: <%= @players.size %></span>
 <table class="table table-condensed table-striped">
   <head>
     <tr>
-      <th>Hide/Show</th>
+      <th></th>
       <th>Player</th>
+      <th>POS</th>
       <th>Average Pick</th>
       <th>SD</th>
       <th>Min</th>
@@ -17,6 +19,7 @@
       <tr id=<%="edit-player-#{player.id}" %>>
         <td><%= link_to('Remove', home_path(player.id), method: :delete, data: { :confirm => "Remove #{player.name}?" }, remote: true, class: "btn btn-sm btn-info") %> </td>
         <td> <%= link_to(player.name, home_path(player.id)) %> </td>
+        <td> <%= player.position.name %> </td>
         <td> <%= player.average_round_pick %> </td>
         <td> <%= player.picks.map { |pick| pick.total }.standard_deviation.round(3) %> </td>
         <td> <%= player.min_pick %></td>

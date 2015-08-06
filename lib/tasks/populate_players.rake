@@ -2,6 +2,7 @@ require 'pry'
 
 desc "populate players"
 task populate_players: :environment do
+  Player.destroy_all
   PlayerPick.destroy_all
   populate_picks
 end
@@ -13,24 +14,24 @@ def populate_picks
 end
 
 def populate_player_picks(players)
-  # ids = get_league_ids
-  ids = (3806..3900).to_a
+  ids = get_league_ids
+  # ids = (3806..3908).to_a
 
   ids.each do |id|
     navigate_to_draft_results id
     puts "League id: #{id}"
 
     players.each do |name|
-      player = Player.find_or_create_by(name: name)
-
       pick = get_pick(name)
 
-      unless pick
+      unless pick[:pick]
         next
       end
 
-      formatted_pick = format_pick pick
-      pick = Pick.find_or_create_by(round: pick, total: formatted_pick)
+      position_id = Position.find_by(name: pick[:position]).id
+      player = Player.find_or_create_by(name: name, position_id: position_id)
+      formatted_pick = format_pick pick[:pick]
+      pick = Pick.find_or_create_by(round: pick[:pick], total: formatted_pick)
 
       PlayerPick.create(player_id: player.id, pick_id: pick.id)
       puts "populating player: #{name} - #{pick.round}"
@@ -54,8 +55,8 @@ def get_league_ids
   league_ids = []
 
   types.each do |type|
-    # @driver.goto("http://fuzzyfantasyfootball.com/members/publicleagues.php?action=#{type}&dtype=1")
-    @driver.goto("http://fuzzyfantasyfootball.com/members/mockdrafts.php")
+    @driver.goto("http://fuzzyfantasyfootball.com/members/publicleagues.php?action=#{type}&dtype=1")
+    # @driver.goto("http://fuzzyfantasyfootball.com/members/mockdrafts.php")
     page_source = @driver.html
     league_ids.push(page_source.scan(/href=.*lid=(\d+)/).uniq)
   end
@@ -76,10 +77,14 @@ def get_pick(name)
 
   if matched_row.empty? or matched_row[0].include? "$"
     pick = nil
+    position = nil
   else
-    pick = matched_row[0].split(" ").last
+    match = matched_row[0].split(" ")
+    pick = match.last
+
+    position = (Position::POSITION_TYPES - (Position::POSITION_TYPES - match)).first
   end
-  pick
+  { pick: pick, position: position }
 end
 
 def rows

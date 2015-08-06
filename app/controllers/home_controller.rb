@@ -11,7 +11,7 @@ class HomeController < ApplicationController
 
   def destroy
     @player_id = params[:id]
-
+    Player.destroy(@player_id)
     respond_to do |format|
       format.js
     end

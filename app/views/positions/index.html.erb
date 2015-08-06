@@ -1,0 +1,178 @@
+<h1>Positions</h1>
+
+<span class="position-heading">Total Players: <%= @players.size %></span>
+<div class="row">
+  <div class="col-md-6">
+    <span class="position-heading">QB</span>
+    <table class="table table-condensed table-striped">
+      <head>
+        <tr>
+          <th></th>
+          <th>Player</th>
+          <th>Average Pick</th>
+          <th>SD</th>
+          <th>Min</th>
+          <th>Max</th>
+        </tr>
+      </head>
+      <body>
+
+      <% filter_position(@players, "QB").each do |player| %>
+          <tr id=<%="edit-player-#{player.id}" %>>
+            <td><%= link_to('Remove', home_path(player.id), method: :delete, data: { :confirm => "Remove #{player.name}?" }, remote: true, class: "btn btn-sm btn-info") %> </td>
+            <td> <%= link_to(player.name, home_path(player.id)) %> </td>
+            <td> <%= player.average_round_pick %> </td>
+            <td> <%= player.picks.map { |pick| pick.total }.standard_deviation.round(3) %> </td>
+            <td> <%= player.min_pick %></td>
+            <td> <%= player.max_pick %></td>
+          </tr>
+      <% end %>
+      </body>
+    </table>
+  </div>
+
+  <div class="col-md-6">
+    <span class="position-heading">RB</span>
+    <table class="table table-condensed table-striped">
+      <head>
+        <tr>
+          <th></th>
+          <th>Player</th>
+          <th>Average Pick</th>
+          <th>SD</th>
+          <th>Min</th>
+          <th>Max</th>
+        </tr>
+      </head>
+      <body>
+
+      <% filter_position(@players, "RB").each do |player| %>
+          <tr id=<%="edit-player-#{player.id}" %>>
+            <td><%= link_to('Remove', home_path(player.id), method: :delete, data: { :confirm => "Remove #{player.name}?" }, remote: true, class: "btn btn-sm btn-info") %> </td>
+            <td> <%= link_to(player.name, home_path(player.id)) %> </td>
+            <td> <%= player.average_round_pick %> </td>
+            <td> <%= player.picks.map { |pick| pick.total }.standard_deviation.round(3) %> </td>
+            <td> <%= player.min_pick %></td>
+            <td> <%= player.max_pick %></td>
+          </tr>
+      <% end %>
+      </body>
+    </table>
+  </div>
+
+  <div class="col-md-6">
+    <span class="position-heading">WR</span>
+    <table class="table table-condensed table-striped">
+      <head>
+        <tr>
+          <th></th>
+          <th>Player</th>
+          <th>Average Pick</th>
+          <th>SD</th>
+          <th>Min</th>
+          <th>Max</th>
+        </tr>
+      </head>
+      <body>
+
+      <% filter_position(@players, "WR").each do |player| %>
+          <tr id=<%="edit-player-#{player.id}" %>>
+            <td><%= link_to('Remove', home_path(player.id), method: :delete, data: { :confirm => "Remove #{player.name}?" }, remote: true, class: "btn btn-sm btn-info") %> </td>
+            <td> <%= link_to(player.name, home_path(player.id)) %> </td>
+            <td> <%= player.average_round_pick %> </td>
+            <td> <%= player.picks.map { |pick| pick.total }.standard_deviation.round(3) %> </td>
+            <td> <%= player.min_pick %></td>
+            <td> <%= player.max_pick %></td>
+          </tr>
+      <% end %>
+      </body>
+    </table>
+  </div>
+
+  <div class="col-md-6">
+    <span class="position-heading">TE</span>
+    <table class="table table-condensed table-striped">
+      <head>
+        <tr>
+          <th></th>
+          <th>Player</th>
+          <th>Average Pick</th>
+          <th>SD</th>
+          <th>Min</th>
+          <th>Max</th>
+        </tr>
+      </head>
+      <body>
+
+      <% filter_position(@players, "TE").each do |player| %>
+          <tr id=<%="edit-player-#{player.id}" %>>
+            <td><%= link_to('Remove', home_path(player.id), method: :delete, data: { :confirm => "Remove #{player.name}?" }, remote: true, class: "btn btn-sm btn-info") %> </td>
+            <td> <%= link_to(player.name, home_path(player.id)) %> </td>
+            <td> <%= player.average_round_pick %> </td>
+            <td> <%= player.picks.map { |pick| pick.total }.standard_deviation.round(3) %> </td>
+            <td> <%= player.min_pick %></td>
+            <td> <%= player.max_pick %></td>
+          </tr>
+      <% end %>
+      </body>
+    </table>
+  </div>
+
+  <div class="col-md-6">
+    <span class="position-heading">K</span>
+    <table class="table table-condensed table-striped">
+      <head>
+        <tr>
+          <th></th>
+          <th>Player</th>
+          <th>Average Pick</th>
+          <th>SD</th>
+          <th>Min</th>
+          <th>Max</th>
+        </tr>
+      </head>
+      <body>
+
+      <% filter_position(@players, "K").each do |player| %>
+          <tr id=<%="edit-player-#{player.id}" %>>
+            <td><%= link_to('Remove', home_path(player.id), method: :delete, data: { :confirm => "Remove #{player.name}?" }, remote: true, class: "btn btn-sm btn-info") %> </td>
+            <td> <%= link_to(player.name, home_path(player.id)) %> </td>
+            <td> <%= player.average_round_pick %> </td>
+            <td> <%= player.picks.map { |pick| pick.total }.standard_deviation.round(3) %> </td>
+            <td> <%= player.min_pick %></td>
+            <td> <%= player.max_pick %></td>
+          </tr>
+      <% end %>
+      </body>
+    </table>
+  </div>
+
+  <div class="col-md-6">
+    <span class="position-heading">Defense</span>
+    <table class="table table-condensed table-striped">
+      <head>
+        <tr>
+          <th></th>
+          <th>Player</th>
+          <th>Average Pick</th>
+          <th>SD</th>
+          <th>Min</th>
+          <th>Max</th>
+        </tr>
+      </head>
+      <body>
+
+      <% filter_position(@players, "D").each do |player| %>
+          <tr id=<%="edit-player-#{player.id}" %>>
+            <td><%= link_to('Remove', home_path(player.id), method: :delete, data: { :confirm => "Remove #{player.name}?" }, remote: true, class: "btn btn-sm btn-info") %> </td>
+            <td> <%= link_to(player.name, home_path(player.id)) %> </td>
+            <td> <%= player.average_round_pick %> </td>
+            <td> <%= player.picks.map { |pick| pick.total }.standard_deviation.round(3) %> </td>
+            <td> <%= player.min_pick %></td>
+            <td> <%= player.max_pick %></td>
+          </tr>
+      <% end %>
+      </body>
+    </table>
+  </div>
+</div>

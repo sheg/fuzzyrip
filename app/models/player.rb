@@ -5,6 +5,8 @@ class Player < ActiveRecord::Base
   has_many :player_picks
   has_many :picks, through: :player_picks
 
+  belongs_to :position
+
   def average_round_pick
     if !self.picks.empty?
       total_average = average_total_pick.round
