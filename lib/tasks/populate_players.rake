@@ -2,8 +2,8 @@ require 'pry'
 
 desc "populate players"
 task populate_players: :environment do
-  Player.destroy_all
-  PlayerPick.destroy_all
+  # Player.destroy_all
+  # PlayerPick.destroy_all
   populate_picks
 end
 
@@ -55,11 +55,16 @@ def get_league_ids
   league_ids = []
 
   types.each do |type|
-    @driver.goto("http://fuzzyfantasyfootball.com/members/publicleagues.php?action=#{type}&dtype=1")
+    @driver.goto("http://fuzzyfantasyfootball.com/members/publicleagues.php?action=#{type}&order=7")
     # @driver.goto("http://fuzzyfantasyfootball.com/members/mockdrafts.php")
-    page_source = @driver.html
-    league_ids.push(page_source.scan(/href=.*lid=(\d+)/).uniq)
+
+    rows = @driver.table(:css => "table[width='99%']").rows.find_all do |row|
+      row[5].text == "Flex 9" && row[3].text.match(/12/)
+    end
+
+    league_ids << rows.map { |row| row[1].link.attribute_value("href").match(/.*=(\d+)/)[1] }
   end
+
   league_ids.flatten
 end
 
