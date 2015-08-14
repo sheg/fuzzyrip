@@ -18,12 +18,14 @@ Floyd, Michael
 Forsett, Justin
 Gordon, Melvin
 Gore, Frank
+Green, A.J.
 HOU Texans
 Hill, Jeremy
 Hill, Josh
 Hilton, T. Y.
 Hopkins, DeAndre
 Johnson, Andre
+Jones, Julio
 KC Chiefs
 Kelce, Travis
 Landry, Jarvis
@@ -39,4 +41,6 @@ Roethlisberger, Ben
 Sanders, Emmanuel
 Smith, Steve
 Tannehill, Ryan
+Thomas, Demaryius
+
 Williams, Andre

@@ -2,8 +2,8 @@ require 'pry'
 
 desc "populate players"
 task populate_players: :environment do
-  # Player.destroy_all
-  # PlayerPick.destroy_all
+  Player.destroy_all
+  PlayerPick.destroy_all
   populate_picks
 end
 
@@ -24,14 +24,16 @@ def populate_player_picks(players)
     players.each do |name|
       pick = get_pick(name)
 
-      unless pick[:pick]
+      if pick.round.nil?
         next
       end
 
-      position_id = Position.find_by(name: pick[:position]).id
+      position_id = Position.find_by(name: pick.position).id
       player = Player.find_or_create_by(name: name, position_id: position_id)
-      formatted_pick = format_pick pick[:pick]
-      pick = Pick.find_or_create_by(round: pick[:pick], total: formatted_pick)
+      formatted_pick = format_pick pick.round
+      pick = Pick.find_or_create_by(round: pick.round, total: formatted_pick)
+
+      puts pick.inspect
 
       PlayerPick.create(player_id: player.id, pick_id: pick.id)
       puts "populating player: #{name} - #{pick.round}"
@@ -44,21 +46,23 @@ end
 def sign_into_fuzzy
   @driver = Watir::Browser.new :phantomjs
   @driver.goto("http://fuzzyfantasyfootball.com")
-  @driver.text_field(:name => 'Email').set("forkoshd@gmail.com")
-  @driver.text_field(:name => 'Password').set("rice8080")
+  @driver.text_field(:name => 'Email').set("fuzzyris80@gmail.com")
+  @driver.text_field(:name => 'Password').set("asdqwe")
   @driver.button(:class => 'loginSubmit').click
   sleep 2
 end
 
 def get_league_ids
-  types = [25, 50]
+  types = [25,50,100]
   league_ids = []
 
   types.each do |type|
+    sleep 1
     @driver.goto("http://fuzzyfantasyfootball.com/members/publicleagues.php?action=#{type}&order=7")
     # @driver.goto("http://fuzzyfantasyfootball.com/members/mockdrafts.php")
 
     rows = @driver.table(:css => "table[width='99%']").rows.find_all do |row|
+      puts "searching #{row.text}"
       row[5].text == "Flex 9" && row[3].text.match(/12/)
     end
 
@@ -89,7 +93,7 @@ def get_pick(name)
 
     position = (Position::POSITION_TYPES - (Position::POSITION_TYPES - match)).first
   end
-  { pick: pick, position: position }
+  RippedPick.new(pick, position)
 end
 
 def rows
@@ -104,4 +108,14 @@ def format_pick(pick)
     formatted_pick = (first.to_i - 1)*12 + second.to_i
   end
   formatted_pick
+end
+
+class RippedPick
+
+  attr_accessor :round, :position
+
+  def initialize(pick, position)
+    self.round = pick
+    self.position = position
+  end
 end
