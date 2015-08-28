@@ -2,11 +2,12 @@ Adams, Davante
 Anderson, C.J.
 Beckham Jr., Odell
 Bell, Le'veon
-Benjamin, Kelvin
 Brees, Drew
 Brown, John
 Bryant, Martavis
+Cobb, David
 Cobb, Randall
+Crabtree, Michael
 Daniels, Owen
 Donnell, Larry
 Edelman, Julian
@@ -25,15 +26,19 @@ Hill, Josh
 Hilton, T. Y.
 Hopkins, DeAndre
 Johnson, Andre
+Johnson, David
 Jones, Julio
 KC Chiefs
 Kelce, Travis
 Landry, Jarvis
 Latimer, Cody
 Luck, Andrew
+Mathews, Ryan
 Miller, Lamar
 Moncrief, Donte
 Olsen, Greg
+Oliver, Branden
+Quick, Brian
 Randle, Joseph
 Rivers, Philip
 Rodgers, Aaron
@@ -42,5 +47,4 @@ Sanders, Emmanuel
 Smith, Steve
 Tannehill, Ryan
 Thomas, Demaryius
-
 Williams, Andre

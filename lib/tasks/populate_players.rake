@@ -53,7 +53,7 @@ def sign_into_fuzzy
 end
 
 def get_league_ids
-  types = [25,50,100]
+  types = [25,50,75,100,150,250,500,1000]
   league_ids = []
 
   types.each do |type|
