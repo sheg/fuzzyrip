@@ -44,7 +44,7 @@ def populate_player_picks(players)
 end
 
 def sign_into_fuzzy
-  @driver = Watir::Browser.new :firefox
+  @driver = Watir::Browser.new :phantomjs
   @driver.goto("http://fuzzyfantasyfootball.com")
   @driver.text_field(:name => 'Email').set("fuzzyris80@gmail.com")
   @driver.text_field(:name => 'Password').set("asdqwe")
