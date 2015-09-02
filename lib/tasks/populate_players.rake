@@ -8,7 +8,7 @@ task populate_players: :environment do
 end
 
 def populate_picks
-  players = File.readlines("players_rob.txt").map { |line| line.gsub("\n", '') }.reject { |x| x == '' }
+  players = File.readlines("players.txt").map { |line| line.gsub("\n", '') }.reject { |x| x == '' }
   sign_into_fuzzy
   populate_player_picks players
 end
