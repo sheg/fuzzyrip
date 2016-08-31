@@ -8,14 +8,14 @@ task populate_players: :environment do
 end
 
 def populate_picks
-  players = File.readlines("players.txt").map { |line| line.gsub("\n", '') }.reject { |x| x == '' }
+  players = File.readlines("players_jeff.txt").map { |line| line.gsub("\n", '') }.reject { |x| x == '' }
   sign_into_fuzzy
   populate_player_picks players
 end
 
 def populate_player_picks(players)
   ids = get_league_ids
-  # ids = (3806..3908).to_a
+  # ids = (4292..4294).to_a
 
   ids.each do |id|
     navigate_to_draft_results id
@@ -46,7 +46,10 @@ end
 def sign_into_fuzzy
   @driver = Watir::Browser.new :phantomjs
   @driver.goto("http://fuzzyfantasyfootball.com")
+
+  @driver.text_field(:name => 'Email').focus
   @driver.text_field(:name => 'Email').set("fuzzyris80@gmail.com")
+  @driver.text_field(:name => 'Password').focus
   @driver.text_field(:name => 'Password').set("asdqwe")
   @driver.button(:class => 'loginSubmit').click
   sleep 2
