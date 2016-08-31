@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2ccbbafe-f2bd-42e8-bc00-2efde041dc0f" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.buildpacks" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/players_jeff.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/.rakeTasks" afterPath="$PROJECT_DIR$/.idea/.rakeTasks" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/fuzzyrip.iml" afterPath="$PROJECT_DIR$/.idea/fuzzyrip.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="fuzzyrip.iws" />
@@ -591,7 +587,13 @@
       <option name="project" value="LOCAL" />
       <updated>1472610133132</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="make it more robust">
+      <created>1472611195533</created>
+      <option name="number" value="00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1472611195533</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="ToolWindowManager">
