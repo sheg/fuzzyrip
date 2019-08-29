@@ -31,7 +31,7 @@
         <entry file="file://$PROJECT_DIR$/lib/tasks/populate_players.rake">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="101">
-              <caret line="26" column="44" lean-forward="false" selection-start-line="26" selection-start-column="44" selection-end-line="26" selection-end-column="44" />
+              <caret line="26" column="36" lean-forward="true" selection-start-line="26" selection-start-column="36" selection-end-line="26" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -483,7 +483,7 @@
       <workItem from="1566696494620" duration="561000" />
       <workItem from="1566758741615" duration="932000" />
       <workItem from="1566764063742" duration="239000" />
-      <workItem from="1567112566928" duration="1451000" />
+      <workItem from="1567112566928" duration="1587000" />
     </task>
     <task id="LOCAL-00001" summary="make it more robust">
       <created>1437013279251</created>
@@ -660,11 +660,18 @@
       <option name="project" value="LOCAL" />
       <updated>1567115556151</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="make it more robust">
+      <created>1567115846890</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1567115846890</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28804000" />
+    <option name="totallyTimeSpent" value="28940000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="245" y="97" width="1433" height="887" extended-state="0" />
@@ -1052,7 +1059,7 @@
     <entry file="file://$PROJECT_DIR$/lib/tasks/populate_players.rake">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="101">
-          <caret line="26" column="44" lean-forward="false" selection-start-line="26" selection-start-column="44" selection-end-line="26" selection-end-column="44" />
+          <caret line="26" column="36" lean-forward="true" selection-start-line="26" selection-start-column="36" selection-end-line="26" selection-end-column="36" />
           <folding />
         </state>
       </provider>
