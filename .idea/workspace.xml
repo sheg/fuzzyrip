@@ -31,7 +31,7 @@
         <entry file="file://$PROJECT_DIR$/lib/tasks/populate_players.rake">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="425">
-              <caret line="25" column="0" lean-forward="true" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+              <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -483,7 +483,7 @@
       <workItem from="1566696494620" duration="561000" />
       <workItem from="1566758741615" duration="932000" />
       <workItem from="1566764063742" duration="239000" />
-      <workItem from="1567112566928" duration="1703000" />
+      <workItem from="1567112566928" duration="1813000" />
     </task>
     <task id="LOCAL-00001" summary="make it more robust">
       <created>1437013279251</created>
@@ -674,11 +674,18 @@
       <option name="project" value="LOCAL" />
       <updated>1567116023561</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="make it more robust">
+      <created>1567116136382</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1567116136382</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="29056000" />
+    <option name="totallyTimeSpent" value="29166000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="245" y="97" width="1433" height="887" extended-state="0" />
@@ -1066,7 +1073,7 @@
     <entry file="file://$PROJECT_DIR$/lib/tasks/populate_players.rake">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
-          <caret line="25" column="0" lean-forward="true" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+          <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
           <folding />
         </state>
       </provider>
