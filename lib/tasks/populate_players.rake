@@ -24,7 +24,7 @@ def sign_into_fuzzy
   #
   # @driver = Selenium::WebDriver.for(:chrome, desired_capabilities: Selenium::WebDriver::Remote::Capabilities.chrome(chrome_opts))
 
-  @driver = Selenium::WebDriver.for(:chrome)
+  @driver = Selenium::WebDriver.for :chrome
 
   @driver.navigate.to "https://fuzzysfantasyfootball.com"
   @driver.manage.timeouts.implicit_wait = 5

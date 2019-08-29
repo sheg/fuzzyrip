@@ -30,8 +30,8 @@
       <file leaf-file-name="populate_players.rake" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/tasks/populate_players.rake">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="424">
-              <caret line="27" column="0" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+            <state relative-caret-position="407">
+              <caret line="26" column="43" lean-forward="false" selection-start-line="26" selection-start-column="43" selection-end-line="26" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -483,7 +483,7 @@
       <workItem from="1566696494620" duration="561000" />
       <workItem from="1566758741615" duration="932000" />
       <workItem from="1566764063742" duration="239000" />
-      <workItem from="1567112566928" duration="1025000" />
+      <workItem from="1567112566928" duration="1200000" />
     </task>
     <task id="LOCAL-00001" summary="make it more robust">
       <created>1437013279251</created>
@@ -646,11 +646,18 @@
       <option name="project" value="LOCAL" />
       <updated>1567114151764</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="make it more robust">
+      <created>1567115207248</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1567115207248</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28378000" />
+    <option name="totallyTimeSpent" value="28553000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="245" y="97" width="1433" height="887" extended-state="0" />
@@ -1037,8 +1044,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/tasks/populate_players.rake">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="424">
-          <caret line="27" column="0" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+        <state relative-caret-position="407">
+          <caret line="26" column="43" lean-forward="false" selection-start-line="26" selection-start-column="43" selection-end-line="26" selection-end-column="43" />
           <folding />
         </state>
       </provider>
