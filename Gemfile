@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
-ruby '2.0.0'
+ruby '2.3.1'
 
 gem 'rails', '4.1.4'
-gem 'pg'
+gem 'pg', "~> 0.11"
 gem 'rails_12factor', '0.0.2'
 
 gem "twitter-bootstrap-rails"
@@ -15,5 +15,8 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0',          group: :doc
-gem 'watir-webdriver'
+gem "watir", "~> 6.0"
+gem 'selenium-webdriver'
+gem 'rb-readline'
+gem 'pry-coolline'
 gem 'pry'
