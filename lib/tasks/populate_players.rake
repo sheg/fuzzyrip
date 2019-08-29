@@ -1,4 +1,5 @@
 require 'pry'
+require 'selenium-webdriver'
 
 desc "populate players"
 task populate_players: :environment do
@@ -8,99 +9,99 @@ task populate_players: :environment do
 end
 
 def populate_picks
-  players = File.readlines("players_jeff.txt").map { |line| line.gsub("\n", '') }.reject { |x| x == '' }
+  players = File.readlines("players.txt").map { |line| line.gsub("\n", '') }.reject { |x| x == '' }
+  # players = players.in_groups_of(5)
   sign_into_fuzzy
   populate_player_picks players
-end
 
-def populate_player_picks(players)
-  ids = get_league_ids
-  # ids = (4292..4294).to_a
-
-  ids.each do |id|
-    navigate_to_draft_results id
-    puts "League id: #{id}"
-
-    players.each do |name|
-      pick = get_pick(name)
-
-      if pick.round.nil?
-        next
-      end
-
-      position_id = Position.find_by(name: pick.position).id
-      player = Player.find_or_create_by(name: name, position_id: position_id)
-      formatted_pick = format_pick pick.round
-      pick = Pick.find_or_create_by(round: pick.round, total: formatted_pick)
-
-      puts pick.inspect
-
-      PlayerPick.create(player_id: player.id, pick_id: pick.id)
-      puts "populating player: #{name} - #{pick.round}"
-    end
-  end
-
-  puts "n = #{ids.length}"
+  # Thread.new { populate_player_picks players[0] }
+  # Thread.new { populate_player_picks players[1] }
 end
 
 def sign_into_fuzzy
-  @driver = Watir::Browser.new :phantomjs
-  @driver.goto("http://fuzzyfantasyfootball.com")
+  @driver = Selenium::WebDriver.for :chrome
 
-  @driver.text_field(:name => 'Email').focus
-  @driver.text_field(:name => 'Email').set("fuzzyris80@gmail.com")
-  @driver.text_field(:name => 'Password').focus
-  @driver.text_field(:name => 'Password').set("asdqwe")
-  @driver.button(:class => 'loginSubmit').click
-  sleep 2
+  @driver.navigate.to "https://fuzzysfantasyfootball.com"
+  @driver.manage.timeouts.implicit_wait = 5
+
+  @driver.find_element(css: "input[name='Email']").send_keys "fuzzyris80@gmail.com"
+  @driver.find_element(css: "input[name='Password']").send_keys "asdqwe"
+  @driver.find_element(css: ".loginSubmit").click
+  navigate_to_leagues_page
 end
 
-def get_league_ids
-  types = [25,50,75,100,150,250,500,1000]
-  league_ids = []
+def filter_league_names
+  rows = @driver.find_elements(css: "table[width='99%'] tr").select do |row|
+    (row.text.include? "Flex 9") && (row.text.include? "12 /") &&
+    (Date.parse(row.find_elements(css: "td")[8].text.lines.first.split("\n").first).to_time < Time.now)
+  end
 
-  types.each do |type|
-    sleep 1
-    @driver.goto("http://fuzzyfantasyfootball.com/members/publicleagues.php?action=#{type}&order=7")
-    # @driver.goto("http://fuzzyfantasyfootball.com/members/mockdrafts.php")
+  rows = rows.drop(1)
+  rows.map { |row| row.find_element(css: "a").text }
+end
 
-    rows = @driver.table(:css => "table[width='99%']").rows.find_all do |row|
-      puts "searching #{row.text}"
-      row[5].text == "Flex 9" && row[3].text.match(/12/)
+def navigate_to_leagues_page
+  @driver.find_elements(css: "td a.headMenu")[2].click
+  sleep 1
+end
+
+def populate_player_picks(players)
+  league_sizes = ["$25", "$50", "$75", "$100", "$150"]
+
+  league_sizes.each do |league_size|
+
+    @driver.find_element(css: "a[title='#{league_size}']").click
+    sleep 2
+
+    filtered_league_names = filter_league_names
+
+    filtered_league_names.each do |league_name|
+      @driver.find_elements(css: "table[width='99%'] tr a").find { |league| league.text == league_name }.click
+      @driver.find_elements(css: ".leagueMenu").find { |cell| cell.text == "Draft Results" }.click
+
+      entire_draft_link = @driver.find_elements(css: "a.headMenu[href='/members/ldraftresults.php?entire=yes']")
+      sleep 1
+      entire_draft_link.first.click unless entire_draft_link.empty?
+      sleep 3
+
+      rows = @driver.find_elements(css: "table")[9].find_elements(css: "tr").drop(6)
+
+      players.each do |name|
+        begin
+          matched_row = rows.select { |row| row.text.include? name }
+        rescue
+          matched_row = ''
+        end
+
+        if matched_row.empty? or matched_row[0].text.include? "$"
+          pick = nil
+          position = nil
+        else
+          match = matched_row[0].text.split(" ")
+          pick = match.last
+
+          position = (Position::POSITION_TYPES - (Position::POSITION_TYPES - match)).first
+        end
+        pick = RippedPick.new(pick, position)
+
+        if pick.round.nil?
+          next
+        end
+
+        position_id = Position.find_by(name: pick.position).id
+        player = Player.find_or_create_by(name: name, position_id: position_id)
+        formatted_pick = format_pick pick.round
+        pick = Pick.find_or_create_by(round: pick.round, total: formatted_pick)
+
+        puts pick.inspect
+
+        PlayerPick.create(player_id: player.id, pick_id: pick.id)
+        puts "populating player: #{name} - #{pick.round}"
+      end
+
+      navigate_to_leagues_page
     end
-
-    league_ids << rows.map { |row| row[1].link.attribute_value("href").match(/.*=(\d+)/)[1] }
   end
-
-  league_ids.flatten
-end
-
-def navigate_to_draft_results(id)
-  puts "http://fuzzyfantasyfootball.com/members/draftresults.php?entire=yes&lid=#{id}"
-  @driver.goto("http://fuzzyfantasyfootball.com/members/draftresults.php?entire=yes&lid=#{id}")
-end
-
-def get_pick(name)
-  begin
-    matched_row = rows.select { |row| row.include? name }
-  rescue
-    matched_row = ''
-  end
-
-  if matched_row.empty? or matched_row[0].include? "$"
-    pick = nil
-    position = nil
-  else
-    match = matched_row[0].split(" ")
-    pick = match.last
-
-    position = (Position::POSITION_TYPES - (Position::POSITION_TYPES - match)).first
-  end
-  RippedPick.new(pick, position)
-end
-
-def rows
-  @driver.table(:index => 4).rows[1].text.split("\n")
 end
 
 def format_pick(pick)
